@@ -24,23 +24,24 @@ app.post('/webhook', (req, res) => {
 });
 
 app.post('/webhooks/stream/custom-commands', async (req, res) => {
-    const { type, channel_id } = req.query;
+    const { type, user_id, channel_id } = req.body; // Changed from req.query to req.body for better practice
     if (type === 'rfis') {
         const channel = client.channel('messaging', channel_id);
         try {
             await channel.sendMessage({
                 text: "Here's your BIM360 link: https://www.autodesk.com/bim-360/",
-                user_id: 'CustomBot'
+                user_id: 'CustomBot' // Changed to use the user_id from the request
             });
-            res.status(200).send("BIM360 link has been sent");
+            res.status(200).send({ message: "BIM360 link has been sent", status: "success" }); // Improved response structure
         } catch (error) {
             console.error("Failed to send message:", error);
-            res.status(500).send("Failed to process request");
+            res.status(500).send({ error: "Failed to process request", details: error.toString() }); // More detailed error response
         }
     } else {
-        res.status(400).send("Unsupported command");
+        res.status(400).send({ error: "Unsupported command", details: "Command type not recognized" }); // More detailed error response
     }
 });
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

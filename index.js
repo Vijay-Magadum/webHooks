@@ -22,7 +22,18 @@ app.post('/webhook', (req, res) => {
     }
     res.status(200).send('Event received');
 });
-
+app.post('/webhooks/stream/custom-commands', (req, res) => {
+    const actionType = req.query.type;
+    if (actionType === 'rfis') {
+         const responseMessage = {
+            text: "Here's your BIM360 link: https://www.autodesk.com/bim-360/",
+            
+        };
+        console.log("Action Type Received: ", actionType);
+        // Respond to the chat with the desired action
+    }
+    res.status(200).send("BIM360 link has been sent");
+});
 
 
 

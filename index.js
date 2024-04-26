@@ -25,6 +25,7 @@ app.post('/webhook', (req, res) => {
 
 app.post('/webhooks/stream/custom-commands', async (req, res) => {
     const { type, user_id, channel_id } = req.body; // Changed from req.query to req.body for better practice
+    console.log("req.body:  ",req.body)
     if (type === 'rfis') {
         const channel = client.channel('messaging', channel_id);
         try {

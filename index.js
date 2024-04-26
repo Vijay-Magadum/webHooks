@@ -24,24 +24,36 @@ app.post('/webhook', (req, res) => {
 });
 
 app.post('/webhooks/stream/custom-commands', async (req, res) => {
-    const { type, user_id, channel_id } = req.body; // Changed from req.query to req.body for better practice
-    console.log("req.body:  ",req.body)
-    if (type === 'rfis') {
-        const channel = client.channel('messaging', channel_id);
+    const { message, user, form_data } = req.body;
+    const cid = message.cid;
+    const type = cid.split(":")[0];
+    const channel_id = cid.split(":")[1];
+
+    if (message.command === 'rfis') {
+        const channel = client.channel(type, channel_id);
         try {
-            await channel.sendMessage({
-                text: "Here's your BIM360 link: https://www.autodesk.com/bim-360/",
-                user_id: 'CustomBot' // Changed to use the user_id from the request
+            const responseMessage = await channel.sendMessage({
+                text: 'Link has been created: https://www.google.com/',
+                user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
             });
-            res.status(200).send({ message: "BIM360 link has been sent", status: "success" }); // Improved response structure
+
+            // If you want to modify the original message, specify the changes here.
+            // Remember only certain fields of the message can be modified as per Stream's documentation.
+            const modifiedMessage = {
+                ...message,
+                text: `Processed ${message.command}: ${message.args}`
+            };
+
+            res.status(200).json(modifiedMessage);
         } catch (error) {
             console.error("Failed to send message:", error);
-            res.status(500).send({ error: "Failed to process request", details: error.toString() }); // More detailed error response
+            res.status(500).send("Failed to process request");
         }
     } else {
-        res.status(400).send({ error: "Unsupported command", details: "Command type not recognized" }); // More detailed error response
+        res.status(400).send("Unsupported command");
     }
 });
+
 
 
 const port = process.env.PORT || 3000;

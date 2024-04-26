@@ -2,7 +2,7 @@ const express = require('express');
 const { StreamChat } = require('getstream');
 require('dotenv').config();
 
-const client = StreamChat.getInstance(process.env.STREAM_API_KEY, process.env.STREAM_API_SECRET);
+const client = new StreamChat(process.env.STREAM_API_KEY, process.env.STREAM_API_SECRET);
 
 const app = express();
 app.use(express.json());

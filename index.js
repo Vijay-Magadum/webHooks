@@ -11,19 +11,17 @@ app.get('/home',(req,res)=>{
 });
 
 app.post('/webhook', (req, res) => {
-    const { type, message } = req.body; // Simplified payload handling for demonstration
-    
-    // Log the received webhook for debugging
-    console.log('Received webhook:', JSON.stringify(req.body, null, 2));
-  
-    // Check if the message includes 'thank you'
-    if (type === 'message.new' && message?.text.toLowerCase().includes('thank you')) {
-      console.log('Welcome! A user said thank you.');
-      // Here you might integrate with GetStream to send a message back or handle differently
+    const { type, message } = req.body;
+    if (type === 'message.new' && message.text.trim() === '/rfi') {
+        // Logic to send a message back to the channel with the "BIM360" link
+        const responseMessage = {
+            text: "Here's your BIM360 link: https://www.autodesk.com/bim-360/",
+            // Other necessary message parameters like channel_id, etc.
+        };
+        // Send responseMessage to the channel
     }
-  
-    res.status(200).send('OK');
-  });
+    res.status(200).send('Event received');
+});
 
 
 

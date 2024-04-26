@@ -1,4 +1,8 @@
 const express = require('express');
+const { StreamChat } = require('getstream');
+
+const client = StreamChat.getInstance('fqhnt9x3puve', 'beauaenbsgfdxrfqnsp9mdhvbbxy38kun4vqbt9c3rc4drppyvrbu5tycb4v73n4');
+
 const app =express();
 
 app.use(express.json());
@@ -22,17 +26,23 @@ app.post('/webhook', (req, res) => {
     }
     res.status(200).send('Event received');
 });
-app.post('/webhooks/stream/custom-commands', (req, res) => {
-    const actionType = req.query.type;
-    if (actionType === 'rfis') {
-         const responseMessage = {
+app.post('/webhooks/stream/custom-commands', async (req, res) => {
+    const { type, channel_id } = req.query; // Assuming channel_id is passed as a query parameter
+    if (type === 'rfis') {
+        // Create or get a channel
+        const channel = client.channel('formschannel', channel_id);
+
+        // Send message to the channel
+        await channel.sendMessage({
             text: "Here's your BIM360 link: https://www.autodesk.com/bim-360/",
-            
-        };
-        console.log("Action Type Received: ", actionType);
-        // Respond to the chat with the desired action
+            user_id: 'CustomBot' // This should be the ID of a system user or the user who triggered the command
+        });
+
+        console.log("Action Type Received: ", type);
+        res.status(200).send("BIM360 link has been sent");
+    } else {
+        res.status(400).send("Unsupported command");
     }
-    res.status(200).send("BIM360 link has been sent");
 });
 
 

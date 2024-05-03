@@ -46,7 +46,7 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
             res.status(200).json(modifiedMessage);
 
 
-            res.status(200).json(responseMessage);
+            // res.status(200).json(responseMessage);
         } catch (error) {
             console.error("Failed to send message:", error);
             res.status(500).send("Failed to process request");

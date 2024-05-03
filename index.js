@@ -33,16 +33,15 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
         const channel = client.channel(type, channel_id);
         try {
             const responseMessage = await channel.sendMessage({
-                text: 'Link has been created: https://www.google.com/',
+                text: 'Link has been created: https://www.autodesk.com/bim-360/',
                 user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
             });
 
             // If you want to modify the original message, specify the changes here.
             // Remember only certain fields of the message can be modified as per Stream's documentation.
-            console.log(...message)
+            
             const modifiedMessage = {
                 ...message,
-                
                 text: `Processed ${message.command}: ${message.args}`
             };
             res.status(200).json(modifiedMessage);

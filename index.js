@@ -38,12 +38,14 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
             });
 
             // Modify the original message if necessary here
-            const modifiedMessage = {
-                ...message,
-                text: `Processed ${message.command}: ${message.args}`
-            };
+            // const modifiedMessage = {
+            //     ...message,
+            //     text: `Processed ${message.command}: ${message.args}`
+            // };
             
-            res.status(200).json(modifiedMessage); 
+            // res.status(200).json(modifiedMessage); 
+            res.status(200).send("Success"); 
+
         } catch (error) {
             console.error("Failed to send message:", error);
             res.status(500).send("Failed to process request");

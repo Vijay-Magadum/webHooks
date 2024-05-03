@@ -33,20 +33,20 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
 
         const channel = client.channel(type, channel_id);
         try {
-           const msgResponse = await channel.sendMessage({
+           await channel.sendMessage({
                 text: 'Link has been created: https://www.autodesk.com/bim-360/',
                 user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
             });
             console.log(msgResponse)
 
             // Modify the original message if necessary here
-            // const modifiedMessage = {
-            //     ...message,
-            //     text: `Processed ${message.command}: ${message.args}`
-            // };
+            const modifiedMessage = {
+                ...message,
+                text: `Processed ${message.command}: ${message.args}`
+            };
             
-            // res.status(200).json(modifiedMessage); 
-            res.status(200).json(msgResponse); 
+            res.status(200).json(modifiedMessage); 
+            // res.status(200).json(msgResponse); 
 
         } catch (error) {
             console.error("Failed to send message:", error);

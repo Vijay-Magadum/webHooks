@@ -41,12 +41,13 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
             // Remember only certain fields of the message can be modified as per Stream's documentation.
             const modifiedMessage = {
                 ...message,
+                console.log(...message)
                 text: `Processed ${message.command}: ${message.args}`
             };
-            res.status(200).json(modifiedMessage);
+            // res.status(200).json(modifiedMessage);
 
 
-            // res.status(200).json(responseMessage);
+            res.status(200).json(responseMessage);
         } catch (error) {
             console.error("Failed to send message:", error);
             res.status(500).send("Failed to process request");

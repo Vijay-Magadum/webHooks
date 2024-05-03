@@ -34,7 +34,7 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
         const channel = client.channel(type, channel_id);
         try {
           const responseMessage = await channel.sendMessage({
-                text: `Ticket created: ${message.args} by ${user.Custom.name}`,
+                text: 'Ticket created',
                 user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
             });
 

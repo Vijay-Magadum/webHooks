@@ -40,12 +40,16 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
 
             // If you want to modify the original message, specify the changes here.
             // Remember only certain fields of the message can be modified as per Stream's documentation.
-            const modifiedMessage = {
-                ...message,
-                text: `Processed ${message.command}: ${message.args}`
-            };
+           setTimeout(() => {
+                // If you want to modify the original message, specify the changes here.
+                // Remember only certain fields of the message can be modified as per Stream's documentation.
+                const modifiedMessage = {
+                    ...message,
+                    text: `Processed ${message.command}: ${message.args}`
+                };
 
-            res.status(200).json(modifiedMessage);
+                res.status(200).json(modifiedMessage);
+            }, 3000); // Delay in milliseconds
 
         } catch (error) {
             console.error("Failed to send message:", error);

@@ -39,9 +39,10 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
 
             // If you want to modify the original message, specify the changes here.
             // Remember only certain fields of the message can be modified as per Stream's documentation.
+            console.log(...message)
             const modifiedMessage = {
                 ...message,
-                console.log(...message)
+                
                 text: `Processed ${message.command}: ${message.args}`
             };
             // res.status(200).json(modifiedMessage);

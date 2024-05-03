@@ -45,7 +45,7 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
                 
                 text: `Processed ${message.command}: ${message.args}`
             };
-            // res.status(200).json(modifiedMessage);
+            res.status(200).json(modifiedMessage);
 
 
             res.status(200).json(responseMessage);

@@ -37,6 +37,7 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
                 text: 'Link has been created: https://www.autodesk.com/bim-360/',
                 user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
             });
+            console.log(msgResponse)
 
             // Modify the original message if necessary here
             // const modifiedMessage = {

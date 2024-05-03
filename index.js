@@ -30,16 +30,13 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
     const channel_id = cid.split(":")[1];
 
     if (message.command === 'rfis') {
-        console.log("cid : ",cid);
-        console.log("type : ",type);
-        console.log("channel_id : ",channel_id);
 
-        // const channel = client.channel(type, channel_id);
-        // try {
-        //     await channel.sendMessage({
-        //         text: 'Link has been created: https://www.autodesk.com/bim-360/',
-        //         user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
-        //     });
+        const channel = client.channel(type, channel_id);
+        try {
+           const msgResponse = await channel.sendMessage({
+                text: 'Link has been created: https://www.autodesk.com/bim-360/',
+                user_id: 'CustomBot' // Assuming the ID of the bot or system user that sends messages
+            });
 
             // Modify the original message if necessary here
             // const modifiedMessage = {
@@ -48,12 +45,12 @@ app.post('/webhooks/stream/custom-commands', async (req, res) => {
             // };
             
             // res.status(200).json(modifiedMessage); 
-            res.status(200); 
+            res.status(200).json(msgResponse); 
 
-        // } catch (error) {
-        //     console.error("Failed to send message:", error);
-        //     res.status(500).send("Failed to process request");
-        // }
+        } catch (error) {
+            console.error("Failed to send message:", error);
+            res.status(500).send("Failed to process request");
+        }
     } else {
         res.status(400).send("Unsupported command");
     }

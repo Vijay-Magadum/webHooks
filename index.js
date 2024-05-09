@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Request from server');
+    res.send('Handga Rutya');
 });
 app.get('/home', (req, res) => {
     res.send('Request from home server');
